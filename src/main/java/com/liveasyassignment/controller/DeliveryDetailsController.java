@@ -35,16 +35,14 @@ public class DeliveryDetailsController {
 		Response responseStatus = deliveryDetailsService.updateDeliveryDetails(deliveryDetails, loadId);
 		return new ResponseEntity<Response>(responseStatus, HttpStatus.ACCEPTED);
 	}
+	
+	@PutMapping("/retriveDeliveryDetails")
+	public ResponseEntity<Response> retrivingDeliveryDetails(@RequestParam long loadId) {
+		Response responseStatus = deliveryDetailsService.retriveDeliverDetails(loadId);
+		return new ResponseEntity<Response>(responseStatus, HttpStatus.OK);
+	}
 }
 /*
-	@PutMapping("/updateNote")
-	public ResponseEntity<Response> updatingNote(@RequestBody NoteDTO noteDto, @RequestHeader String token,
-			@RequestParam long noteId) {
-
-		Response responseStatus = noteService.updateNote(noteDto, token, noteId);
-		return new ResponseEntity<Response>(responseStatus, HttpStatus.ACCEPTED);
-	}
-
 	@PutMapping("/retrieveNote")
 	public ResponseEntity<Response> retrievingNote(@RequestHeader String token, @RequestParam long noteId) {
 

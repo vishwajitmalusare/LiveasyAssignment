@@ -71,8 +71,11 @@ public class DeliveryDetailsServiceImplimentaion implements DiliveryDetailsServi
 
 	@Override
 	public Response retriveDeliverDetails(long loadId) {
-		// TODO Auto-generated method stub
-		return null;
+		DeliveryDetailsModel newDeliveryDetails = deliveryDetailsRepo.findByLoadId(loadId);
+		
+		Response response = ResponseHelper.statusResponse(300, "Retrived "+
+		newDeliveryDetails.toString());
+		return response;
 	}
 
 	@Override
@@ -89,10 +92,6 @@ public class DeliveryDetailsServiceImplimentaion implements DiliveryDetailsServi
 		long id = userToken.decodeToken(token);
 		Note note = noteRepository.findByUserIdAndNoteId(id, noteId);
 		String title = note.getTitle();
-		System.out.println(title);
-
-		String description = note.getDescription();
-		System.out.println(description);
 
 		Response response = ResponseHelper.statusResponse(300, "retrieved successfully");
 		return response;
