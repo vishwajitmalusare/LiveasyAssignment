@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,15 +42,14 @@ public class DeliveryDetailsController {
 		Response responseStatus = deliveryDetailsService.retriveDeliverDetails(loadId);
 		return new ResponseEntity<Response>(responseStatus, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/deleteDeliverDetails")
+	public ResponseEntity<Response> deletingDeliveryDetails(@RequestParam long loadId) {
+		Response response = deliveryDetailsService.deleteDeliveryDetails(loadId);
+		return new ResponseEntity<Response>(response, HttpStatus.OK);
+	}
 }
 /*
-	@PutMapping("/retrieveNote")
-	public ResponseEntity<Response> retrievingNote(@RequestHeader String token, @RequestParam long noteId) {
-
-		Response responseStatus = noteService.retrieveNote(token, noteId);
-		return new ResponseEntity<Response>(responseStatus, HttpStatus.OK);
-	}
-
 	@PutMapping("/deleteNote")
 	public ResponseEntity<Response> deletingNote(@RequestHeader String token, @RequestParam long noteId) {
 		Response responseStatus = noteService.deleteNote(token, noteId);

@@ -80,39 +80,15 @@ public class DeliveryDetailsServiceImplimentaion implements DiliveryDetailsServi
 
 	@Override
 	public Response deleteDeliveryDetails(long loadId) {
-		// TODO Auto-generated method stub
-		return null;
+		DeliveryDetailsModel obj = deliveryDetailsRepo.findByLoadId(loadId);
+		deliveryDetailsRepo.delete(obj);
+		Response response = ResponseHelper.statusResponse(200, "Deleted succesfully");
+		return response;
 	}
 
 }
 /*
-	@Override
-	public Response retrieveNote(String token, long noteId) {
-
-		long id = userToken.decodeToken(token);
-		Note note = noteRepository.findByUserIdAndNoteId(id, noteId);
-		String title = note.getTitle();
-
-		Response response = ResponseHelper.statusResponse(300, "retrieved successfully");
-		return response;
-	}
-
-	public Response deleteNote(String token, long noteId) {
-		long id = userToken.decodeToken(token);
-
-		Note note = noteRepository.findByUserIdAndNoteId(id, noteId);
-
-		if (note.isTrash() == false) {
-			note.setTrash(true);
-			note.setModified(LocalDateTime.now());
-			noteRepository.save(note);
-			Response response = ResponseHelper.statusResponse(100, environment.getProperty("status.note.trashed"));
-			return response;
-		}
-
-		Response response = ResponseHelper.statusResponse(100, environment.getProperty("status.note.trashError"));
-		return response;
-	}
+	
 
 	public Response deleteNotePermenantly(String token, long noteId) {
 
@@ -131,6 +107,23 @@ public class DeliveryDetailsServiceImplimentaion implements DiliveryDetailsServi
 			Response response = ResponseHelper.statusResponse(100, environment.getProperty("status.note.noteDeleted"));
 			return response;
 		}
+	}
+	
+	public Response deleteNote(String token, long noteId) {
+		long id = userToken.decodeToken(token);
+
+		Note note = noteRepository.findByUserIdAndNoteId(id, noteId);
+
+		if (note.isTrash() == false) {
+			note.setTrash(true);
+			note.setModified(LocalDateTime.now());
+			noteRepository.save(note);
+			Response response = ResponseHelper.statusResponse(100, environment.getProperty("status.note.trashed"));
+			return response;
+		}
+
+		Response response = ResponseHelper.statusResponse(100, environment.getProperty("status.note.trashError"));
+		return response;
 	}
 	
 	 @Override
