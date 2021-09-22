@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.liveasyassignment.model.DeliveryDetailsModel;
@@ -27,28 +29,14 @@ public class DeliveryDetailsController {
 		Response response = deliveryDetailsService.createDeliveryDetails(delieryDetails);
 		return new ResponseEntity<Response>(response, HttpStatus.OK);
 	}
+	
+	@PutMapping("/updateDelieryDetails")
+	public ResponseEntity<Response> updateingDeliveryDetails(@RequestBody DeliveryDetailsModel deliveryDetails, @RequestParam long loadId){
+		Response responseStatus = deliveryDetailsService.updateDeliveryDetails(deliveryDetails, loadId);
+		return new ResponseEntity<Response>(responseStatus, HttpStatus.ACCEPTED);
+	}
 }
 /*
- * 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import com.bridgelabz.fundoonotes.response.Response;
-
-	@PostMapping("/createNote")
-	public ResponseEntity<Response> creatingNote(@RequestBody NoteDTO noteDto, @RequestHeader String token) {
-		System.out.println("NotesController.creatingNote()");
-		Response responseStatus = noteService.createNote(noteDto, token);
-		return new ResponseEntity<Response>(responseStatus, HttpStatus.OK);
-	}
-
 	@PutMapping("/updateNote")
 	public ResponseEntity<Response> updatingNote(@RequestBody NoteDTO noteDto, @RequestHeader String token,
 			@RequestParam long noteId) {

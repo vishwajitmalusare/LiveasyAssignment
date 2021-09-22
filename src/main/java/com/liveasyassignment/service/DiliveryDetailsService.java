@@ -7,7 +7,7 @@ public interface DiliveryDetailsService {
 	
 	public Response createDeliveryDetails(DeliveryDetailsModel deliveryDetails);
 	
-	public Response updateDeliverDetails(DeliveryDetailsModel deliveryDetails);
+	public Response updateDeliveryDetails(DeliveryDetailsModel deliveryDetails, long loadId);
 	
 	public Response retriveDeliverDetails(long loadId);
 	

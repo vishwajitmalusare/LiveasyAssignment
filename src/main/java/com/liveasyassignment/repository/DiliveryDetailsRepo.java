@@ -9,5 +9,5 @@ import com.liveasyassignment.model.DeliveryDetailsModel;
 
 @Repository
 public interface DiliveryDetailsRepo extends JpaRepository<DeliveryDetailsModel, Long> {
-	public Optional<DeliveryDetailsModel> findByLoadId(long loadId);
+	public DeliveryDetailsModel findByLoadId(long loadId);
 }

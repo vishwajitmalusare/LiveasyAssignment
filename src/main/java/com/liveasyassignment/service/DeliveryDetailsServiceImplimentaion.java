@@ -13,6 +13,7 @@ import com.liveasyassignment.model.DeliveryDetailsModel;
 import com.liveasyassignment.repository.DiliveryDetailsRepo;
 import com.liveasyassignment.response.Response;
 import com.liveasyassignment.response.ResponseHelper;
+import com.liveasyassignment.response.UserException;
 
 @Service("deleveryDetailsService")
 public class DeliveryDetailsServiceImplimentaion implements DiliveryDetailsService {
@@ -47,9 +48,25 @@ public class DeliveryDetailsServiceImplimentaion implements DiliveryDetailsServi
 	}
 
 	@Override
-	public Response updateDeliverDetails(DeliveryDetailsModel deliveryDetails) {
-		// TODO Auto-generated method stub
-		return null;
+	public Response updateDeliveryDetails(DeliveryDetailsModel deliveryDetails, long longId) {
+		if (deliveryDetails.getLoadPoint().isEmpty() && deliveryDetails.getProductType().isEmpty()) {
+			throw new UserException("Delivery details are looks empty !!!");
+		}
+		
+		DeliveryDetailsModel newDeliveryDetails = deliveryDetailsRepo.findByLoadId(longId);
+		newDeliveryDetails.setLoadPoint(deliveryDetails.getLoadPoint());
+		newDeliveryDetails.setUnloadingPoint(deliveryDetails.getUnloadingPoint());
+		newDeliveryDetails.setNoOfTrucks(deliveryDetails.getNoOfTrucks());
+		newDeliveryDetails.setProductType(deliveryDetails.getProductType());
+		newDeliveryDetails.setTruckType(deliveryDetails.getTruckType());
+		newDeliveryDetails.setShipperId(deliveryDetails.getShipperId());
+		newDeliveryDetails.setWeight(deliveryDetails.getWeight());
+		newDeliveryDetails.setDate(LocalDateTime.now());
+		newDeliveryDetails.setOptional(deliveryDetails.getOptional());
+		deliveryDetailsRepo.save(newDeliveryDetails);
+		
+		Response response = ResponseHelper.statusResponse(200, "Updates Successfully !!!!");
+		return response;
 	}
 
 	@Override
@@ -66,24 +83,6 @@ public class DeliveryDetailsServiceImplimentaion implements DiliveryDetailsServi
 
 }
 /*
- * 	@Override
-	public Response updateNote(NoteDTO noteDto, String token, long noteId) {
-		if (noteDto.getTitle().isEmpty() && noteDto.getDescription().isEmpty()) {
-			throw new UserException(-5, "Title and description are empty");
-		}
-
-		long id = userToken.decodeToken(token);
-		Note note = noteRepository.findByUserIdAndNoteId(id, noteId);
-		note.setTitle(noteDto.getTitle());
-		note.setDescription(noteDto.getDescription());
-		note.setModified(LocalDateTime.now());
-		noteRepository.save(note);
-
-		Response response = ResponseHelper.statusResponse(200,
-				environment.getProperty("status.notes.updatedSuccessfull"));
-		return response;
-	}
-
 	@Override
 	public Response retrieveNote(String token, long noteId) {
 
