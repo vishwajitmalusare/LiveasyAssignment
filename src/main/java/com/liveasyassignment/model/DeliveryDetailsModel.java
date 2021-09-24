@@ -2,15 +2,23 @@ package com.liveasyassignment.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "deliverydetails")
@@ -49,9 +57,13 @@ public class DeliveryDetailsModel {
 	@NotNull
 	private int shipperId;
 	
-	private LocalDateTime actualDate;
+	@NotNull
+	private LocalDateTime date;
 
-	private ArrayList<String> optional = new ArrayList<String>();
+	@ElementCollection
+	@MapKeyColumn(name="comment")
+	@CollectionTable(name="delivery_details_model_optional",joinColumns =@JoinColumn(name="delivery_details_model_load_id"))
+	private Map<String,String > optional;
 
 	public Long getLoadId() {
 		return loadId;
@@ -116,20 +128,21 @@ public class DeliveryDetailsModel {
 	public void setShipperId(int shipperId) {
 		this.shipperId = shipperId;
 	}
-
+	
 	public LocalDateTime getDate() {
-		return actualDate;
+		return date;
 	}
 
-	public void setDate(LocalDateTime actualDate2) {
-		this.actualDate = actualDate;
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
-	public ArrayList<String> getOptional() {
+
+	public Map<String, String> getOptional() {
 		return optional;
 	}
 
-	public void setOptional(ArrayList<String> optional) {
+	public void setOptional(Map<String, String> optional) {
 		this.optional = optional;
 	}
 
@@ -137,7 +150,7 @@ public class DeliveryDetailsModel {
 	public String toString() {
 		return "DeliveryDetailsModel [loadId=" + loadId + ", loadPoint=" + loadPoint + ", unloadingPoint="
 				+ unloadingPoint + ", productType=" + productType + ", truckType=" + truckType + ", noOfTrucks="
-				+ noOfTrucks + ", weight=" + weight + ", shipperId=" + shipperId + ", date=" + actualDate + ", optional="
+				+ noOfTrucks + ", weight=" + weight + ", shipperId=" + shipperId + ", date=" + date + ", optional="
 				+ optional + "]";
 	}
 	
